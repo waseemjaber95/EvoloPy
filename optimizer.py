@@ -19,6 +19,7 @@ import optimizers.HHO as hho
 import optimizers.SCA as sca
 import optimizers.JAYA as jaya
 import optimizers.DE as de
+import optimizers.GGO as ggo
 import benchmarks
 import csv
 import numpy
@@ -31,44 +32,57 @@ import plot_boxplot as box_plot
 warnings.simplefilter(action="ignore")
 
 
-def selector(algo, func_details, popSize, Iter):
+def selector(algo, func_details, popSize, Iter, population):
     function_name = func_details[0]
     lb = func_details[1]
     ub = func_details[2]
     dim = func_details[3]
 
     if algo == "SSA":
-        x = ssa.SSA(getattr(benchmarks, function_name), lb, ub, dim, popSize, Iter)
+        x = ssa.SSA(getattr(benchmarks, function_name), lb, ub, dim, popSize, Iter, population)
     elif algo == "PSO":
-        x = pso.PSO(getattr(benchmarks, function_name), lb, ub, dim, popSize, Iter)
+        x = pso.PSO(getattr(benchmarks, function_name), lb, ub, dim, popSize, Iter, population)
     elif algo == "GA":
-        x = ga.GA(getattr(benchmarks, function_name), lb, ub, dim, popSize, Iter)
+        x = ga.GA(getattr(benchmarks, function_name), lb, ub, dim, popSize, Iter, population)
     elif algo == "BAT":
-        x = bat.BAT(getattr(benchmarks, function_name), lb, ub, dim, popSize, Iter)
+        x = bat.BAT(getattr(benchmarks, function_name), lb, ub, dim, popSize, Iter, population)
     elif algo == "FFA":
-        x = ffa.FFA(getattr(benchmarks, function_name), lb, ub, dim, popSize, Iter)
+        x = ffa.FFA(getattr(benchmarks, function_name), lb, ub, dim, popSize, Iter, population)
     elif algo == "GWO":
-        x = gwo.GWO(getattr(benchmarks, function_name), lb, ub, dim, popSize, Iter)
+        x = gwo.GWO(getattr(benchmarks, function_name), lb, ub, dim, popSize, Iter, population)
     elif algo == "WOA":
-        x = woa.WOA(getattr(benchmarks, function_name), lb, ub, dim, popSize, Iter)
+        x = woa.WOA(getattr(benchmarks, function_name), lb, ub, dim, popSize, Iter, population)
     elif algo == "MVO":
-        x = mvo.MVO(getattr(benchmarks, function_name), lb, ub, dim, popSize, Iter)
+        x = mvo.MVO(getattr(benchmarks, function_name), lb, ub, dim, popSize, Iter, population)
     elif algo == "MFO":
-        x = mfo.MFO(getattr(benchmarks, function_name), lb, ub, dim, popSize, Iter)
+        x = mfo.MFO(getattr(benchmarks, function_name), lb, ub, dim, popSize, Iter, population)
     elif algo == "CS":
-        x = cs.CS(getattr(benchmarks, function_name), lb, ub, dim, popSize, Iter)
+        x = cs.CS(getattr(benchmarks, function_name), lb, ub, dim, popSize, Iter, population)
     elif algo == "HHO":
-        x = hho.HHO(getattr(benchmarks, function_name), lb, ub, dim, popSize, Iter)
+        x = hho.HHO(getattr(benchmarks, function_name), lb, ub, dim, popSize, Iter, population)
     elif algo == "SCA":
-        x = sca.SCA(getattr(benchmarks, function_name), lb, ub, dim, popSize, Iter)
+        x = sca.SCA(getattr(benchmarks, function_name), lb, ub, dim, popSize, Iter, population)
     elif algo == "JAYA":
-        x = jaya.JAYA(getattr(benchmarks, function_name), lb, ub, dim, popSize, Iter)
+        x = jaya.JAYA(getattr(benchmarks, function_name), lb, ub, dim, popSize, Iter, population)
     elif algo == "DE":
-        x = de.DE(getattr(benchmarks, function_name), lb, ub, dim, popSize, Iter)
+        x = de.DE(getattr(benchmarks, function_name), lb, ub, dim, popSize, Iter, population)
+    elif algo == "GGO":
+        x = ggo.GGO(getattr(benchmarks, function_name), lb, ub, dim, popSize, Iter, population)
     else:
-        return null
+        return None
     return x
 
+def get_population(lb, ub, dim, popSize):
+    if not isinstance(lb, list):
+        lb = [lb] * dim
+    if not isinstance(ub, list):
+        ub = [ub] * dim
+
+    population = numpy.zeros((popSize, dim))
+    for i in range(dim):
+        population[:, i] = numpy.random.uniform(0, 1, popSize) * (ub[i] - lb[i]) + lb[i]
+
+    return population
 
 def run(optimizer, objectivefunc, NumOfRuns, params, export_flags):
 
@@ -121,13 +135,21 @@ def run(optimizer, objectivefunc, NumOfRuns, params, export_flags):
     for l in range(0, Iterations):
         CnvgHeader.append("Iter" + str(l + 1))
 
+    ####
+    func_details = benchmarks.getFunctionDetails(objectivefunc[0])
+    lb = func_details[1]
+    ub = func_details[2]
+    dim = func_details[3]
+    population = get_population(lb=lb, ub=ub, dim=dim, popSize=PopulationSize)
+    ###
+
     for i in range(0, len(optimizer)):
         for j in range(0, len(objectivefunc)):
             convergence = [0] * NumOfRuns
             executionTime = [0] * NumOfRuns
             for k in range(0, NumOfRuns):
                 func_details = benchmarks.getFunctionDetails(objectivefunc[j])
-                x = selector(optimizer[i], func_details, PopulationSize, Iterations)
+                x = selector(optimizer[i], func_details, PopulationSize, Iterations, population)
                 convergence[k] = x.convergence
                 optimizerName = x.optimizer
                 objfname = x.objfname

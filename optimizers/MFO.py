@@ -12,7 +12,7 @@ from solution import solution
 import time
 
 
-def MFO(objf, lb, ub, dim, N, Max_iteration):
+def MFO(objf, lb, ub, dim, N, Max_iteration, population):
 
     # Max_iteration=1000
     # lb=-100
@@ -25,9 +25,11 @@ def MFO(objf, lb, ub, dim, N, Max_iteration):
         ub = [ub] * dim
 
     # Initialize the positions of moths
-    Moth_pos = numpy.zeros((N, dim))
-    for i in range(dim):
-        Moth_pos[:, i] = numpy.random.uniform(0, 1, N) * (ub[i] - lb[i]) + lb[i]
+    # Moth_pos = numpy.zeros((N, dim))
+    # for i in range(dim):
+    #     Moth_pos[:, i] = numpy.random.uniform(0, 1, N) * (ub[i] - lb[i]) + lb[i]
+    Moth_pos = population.copy()
+
     Moth_fitness = numpy.full(N, float("inf"))
     # Moth_fitness=numpy.fell(float("inf"))
 

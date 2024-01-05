@@ -7,7 +7,7 @@ from solution import solution
 # Differential Evolution (DE)
 # mutation factor = [0.5, 2]
 # crossover_ratio = [0,1]
-def DE(objf, lb, ub, dim, PopSize, iters):
+def DE(objf, lb, ub, dim, PopSize, iters, population):
 
     mutation_factor = 0.5
     crossover_ratio = 0.7
@@ -24,7 +24,7 @@ def DE(objf, lb, ub, dim, PopSize, iters):
     s.best = float("inf")
 
     # initialize population
-    population = []
+    # population = []
 
     population_fitness = numpy.array([float("inf") for _ in range(PopSize)])
 
@@ -35,8 +35,6 @@ def DE(objf, lb, ub, dim, PopSize, iters):
             sol.append(d_val)
 
         population.append(sol)
-
-    population = numpy.array(population)
 
     # calculate fitness for all the population
     for i in range(PopSize):

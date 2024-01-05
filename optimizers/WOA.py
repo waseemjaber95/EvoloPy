@@ -11,7 +11,7 @@ from solution import solution
 import time
 
 
-def WOA(objf, lb, ub, dim, SearchAgents_no, Max_iter):
+def WOA(objf, lb, ub, dim, SearchAgents_no, Max_iter, population):
 
     # dim=30
     # SearchAgents_no=50
@@ -28,11 +28,12 @@ def WOA(objf, lb, ub, dim, SearchAgents_no, Max_iter):
     Leader_score = float("inf")  # change this to -inf for maximization problems
 
     # Initialize the positions of search agents
-    Positions = numpy.zeros((SearchAgents_no, dim))
-    for i in range(dim):
-        Positions[:, i] = (
-            numpy.random.uniform(0, 1, SearchAgents_no) * (ub[i] - lb[i]) + lb[i]
-        )
+    # Positions = numpy.zeros((SearchAgents_no, dim))
+    # for i in range(dim):
+    #     Positions[:, i] = (
+    #         numpy.random.uniform(0, 1, SearchAgents_no) * (ub[i] - lb[i]) + lb[i]
+    #     )
+    Positions = population.copy()
 
     # Initialize convergence
     convergence_curve = numpy.zeros(Max_iter)

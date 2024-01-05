@@ -7,7 +7,7 @@ from solution import solution
 import time
 
 
-def JAYA(objf, lb, ub, dim, SearchAgents_no, Max_iter):
+def JAYA(objf, lb, ub, dim, SearchAgents_no, Max_iter, population):
 
     # Best and Worst position initialization
     Best_pos = numpy.zeros(dim)
@@ -24,11 +24,12 @@ def JAYA(objf, lb, ub, dim, SearchAgents_no, Max_iter):
         ub = [ub] * dim
 
     # Initialize the positions of search agents
-    Positions = numpy.zeros((SearchAgents_no, dim))
-    for i in range(dim):
-        Positions[:, i] = (
-            numpy.random.uniform(0, 1, SearchAgents_no) * (ub[i] - lb[i]) + lb[i]
-        )
+    # Positions = numpy.zeros((SearchAgents_no, dim))
+    # for i in range(dim):
+    #     Positions[:, i] = (
+    #         numpy.random.uniform(0, 1, SearchAgents_no) * (ub[i] - lb[i]) + lb[i]
+    #     )
+    Positions = population.copy()
 
     for i in range(0, SearchAgents_no):
 

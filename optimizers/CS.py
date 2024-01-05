@@ -81,7 +81,7 @@ def empty_nests(nest, pa, n, dim):
 ##########################################################################
 
 
-def CS(objf, lb, ub, dim, n, N_IterTotal):
+def CS(objf, lb, ub, dim, n, N_IterTotal, population):
 
     # lb=-1
     # ub=1
@@ -103,9 +103,10 @@ def CS(objf, lb, ub, dim, n, N_IterTotal):
         ub = [ub] * dim
 
     # RInitialize nests randomely
-    nest = numpy.zeros((n, dim))
-    for i in range(dim):
-        nest[:, i] = numpy.random.uniform(0, 1, n) * (ub[i] - lb[i]) + lb[i]
+    # nest = numpy.zeros((n, dim))
+    # for i in range(dim):
+    #     nest[:, i] = numpy.random.uniform(0, 1, n) * (ub[i] - lb[i]) + lb[i]
+    nest = population.copy()
 
     new_nest = numpy.zeros((n, dim))
     new_nest = numpy.copy(nest)

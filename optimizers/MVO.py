@@ -51,7 +51,7 @@ def RouletteWheelSelection(weights):
     return choice
 
 
-def MVO(objf, lb, ub, dim, N, Max_time):
+def MVO(objf, lb, ub, dim, N, Max_time, population):
 
     "parameters"
     # dim=30
@@ -66,9 +66,10 @@ def MVO(objf, lb, ub, dim, N, Max_time):
     if not isinstance(ub, list):
         ub = [ub] * dim
 
-    Universes = numpy.zeros((N, dim))
-    for i in range(dim):
-        Universes[:, i] = numpy.random.uniform(0, 1, N) * (ub[i] - lb[i]) + lb[i]
+    # Universes = numpy.zeros((N, dim))
+    # for i in range(dim):
+    #     Universes[:, i] = numpy.random.uniform(0, 1, N) * (ub[i] - lb[i]) + lb[i]
+    Universes = population.copy()
 
     Sorted_universes = numpy.copy(Universes)
 

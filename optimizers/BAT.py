@@ -11,7 +11,7 @@ import time
 from solution import solution
 
 
-def BAT(objf, lb, ub, dim, N, Max_iteration):
+def BAT(objf, lb, ub, dim, N, Max_iteration, population):
 
     n = N
     # Population size
@@ -38,9 +38,10 @@ def BAT(objf, lb, ub, dim, N, Max_iteration):
     Convergence_curve = []
 
     # Initialize the population/solutions
-    Sol = numpy.zeros((n, d))
-    for i in range(dim):
-        Sol[:, i] = numpy.random.rand(n) * (ub[i] - lb[i]) + lb[i]
+    # Sol = numpy.zeros((n, d))
+    # for i in range(dim):
+    #     Sol[:, i] = numpy.random.rand(n) * (ub[i] - lb[i]) + lb[i]
+    Sol = population.copy()
 
     S = numpy.zeros((n, d))
     S = numpy.copy(Sol)

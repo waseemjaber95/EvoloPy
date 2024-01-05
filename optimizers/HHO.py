@@ -19,7 +19,7 @@ from solution import solution
 import time
 
 
-def HHO(objf, lb, ub, dim, SearchAgents_no, Max_iter):
+def HHO(objf, lb, ub, dim, SearchAgents_no, Max_iter, population):
 
     # dim=30
     # SearchAgents_no=50
@@ -38,9 +38,10 @@ def HHO(objf, lb, ub, dim, SearchAgents_no, Max_iter):
     ub = numpy.asarray(ub)
 
     # Initialize the locations of Harris' hawks
-    X = numpy.asarray(
-        [x * (ub - lb) + lb for x in numpy.random.uniform(0, 1, (SearchAgents_no, dim))]
-    )
+    # X = numpy.asarray(
+    #     [x * (ub - lb) + lb for x in numpy.random.uniform(0, 1, (SearchAgents_no, dim))]
+    # )
+    X = population.copy()
 
     # Initialize convergence
     convergence_curve = numpy.zeros(Max_iter)

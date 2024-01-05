@@ -11,7 +11,7 @@ from solution import solution
 import time
 
 
-def PSO(objf, lb, ub, dim, PopSize, iters):
+def PSO(objf, lb, ub, dim, PopSize, iters, population):
 
     # PSO parameters
 
@@ -39,9 +39,10 @@ def PSO(objf, lb, ub, dim, PopSize, iters):
 
     gBestScore = float("inf")
 
-    pos = numpy.zeros((PopSize, dim))
-    for i in range(dim):
-        pos[:, i] = numpy.random.uniform(0, 1, PopSize) * (ub[i] - lb[i]) + lb[i]
+    # pos = numpy.zeros((PopSize, dim))
+    # for i in range(dim):
+    #     pos[:, i] = numpy.random.uniform(0, 1, PopSize) * (ub[i] - lb[i]) + lb[i]
+    pos = population.copy()
 
     convergence_curve = numpy.zeros(iters)
 

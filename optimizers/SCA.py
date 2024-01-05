@@ -7,7 +7,7 @@ from solution import solution
 import time
 
 
-def SCA(objf, lb, ub, dim, SearchAgents_no, Max_iter):
+def SCA(objf, lb, ub, dim, SearchAgents_no, Max_iter, population):
 
     # destination_pos
     Dest_pos = numpy.zeros(dim)
@@ -19,11 +19,12 @@ def SCA(objf, lb, ub, dim, SearchAgents_no, Max_iter):
         ub = [ub] * dim
 
     # Initialize the positions of search agents
-    Positions = numpy.zeros((SearchAgents_no, dim))
-    for i in range(dim):
-        Positions[:, i] = (
-            numpy.random.uniform(0, 1, SearchAgents_no) * (ub[i] - lb[i]) + lb[i]
-        )
+    # Positions = numpy.zeros((SearchAgents_no, dim))
+    # for i in range(dim):
+    #     Positions[:, i] = (
+    #         numpy.random.uniform(0, 1, SearchAgents_no) * (ub[i] - lb[i]) + lb[i]
+    #     )
+    Positions = population.copy()
 
     Convergence_curve = numpy.zeros(Max_iter)
     s = solution()

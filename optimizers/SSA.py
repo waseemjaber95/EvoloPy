@@ -5,13 +5,12 @@ from solution import solution
 import time
 
 
-def SSA(objf, lb, ub, dim, N, Max_iteration):
+def SSA(objf, lb, ub, dim, N, Max_iteration, population):
 
     # Max_iteration=1000
     # lb=-100
     # ub=100
     # dim=30
-    N = 50  # Number of search agents
     if not isinstance(lb, list):
         lb = [lb] * dim
     if not isinstance(ub, list):
@@ -19,9 +18,11 @@ def SSA(objf, lb, ub, dim, N, Max_iteration):
     Convergence_curve = numpy.zeros(Max_iteration)
 
     # Initialize the positions of salps
-    SalpPositions = numpy.zeros((N, dim))
-    for i in range(dim):
-        SalpPositions[:, i] = numpy.random.uniform(0, 1, N) * (ub[i] - lb[i]) + lb[i]
+    # SalpPositions = numpy.zeros((N, dim))
+    # for i in range(dim):
+    #     SalpPositions[:, i] = numpy.random.uniform(0, 1, N) * (ub[i] - lb[i]) + lb[i]
+    SalpPositions = population.copy()
+
     SalpFitness = numpy.full(N, float("inf"))
 
     FoodPosition = numpy.zeros(dim)

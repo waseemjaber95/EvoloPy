@@ -31,7 +31,7 @@ def alpha_new(alpha, NGen):
     return alpha
 
 
-def FFA(objf, lb, ub, dim, n, MaxGeneration):
+def FFA(objf, lb, ub, dim, n, MaxGeneration, population):
 
     # General parameters
 
@@ -54,9 +54,11 @@ def FFA(objf, lb, ub, dim, n, MaxGeneration):
     zn.fill(float("inf"))
 
     # ns(i,:)=Lb+(Ub-Lb).*rand(1,d);
-    ns = numpy.zeros((n, dim))
-    for i in range(dim):
-        ns[:, i] = numpy.random.uniform(0, 1, n) * (ub[i] - lb[i]) + lb[i]
+    # ns = numpy.zeros((n, dim))
+    # for i in range(dim):
+    #     ns[:, i] = numpy.random.uniform(0, 1, n) * (ub[i] - lb[i]) + lb[i]
+    ns = population.copy()
+
     Lightn = numpy.ones(n)
     Lightn.fill(float("inf"))
 

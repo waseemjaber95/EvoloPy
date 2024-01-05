@@ -347,7 +347,7 @@ def sortPopulation(population, scores):
     return population, scores
 
 
-def GA(objf, lb, ub, dim, popSize, iters):
+def GA(objf, lb, ub, dim, popSize, iters, population):
 
     """
     This is the main method which implements GA
@@ -366,6 +366,8 @@ def GA(objf, lb, ub, dim, popSize, iters):
         Number of chrmosomes in a population
     iters: int
         Number of iterations / generations of GA
+    population: list
+        The list of individuals
 
     Returns
     -------
@@ -389,9 +391,10 @@ def GA(objf, lb, ub, dim, popSize, iters):
     scores = numpy.random.uniform(0.0, 1.0, popSize)
     bestScore = float("inf")
 
-    ga = numpy.zeros((popSize, dim))
-    for i in range(dim):
-        ga[:, i] = numpy.random.uniform(0, 1, popSize) * (ub[i] - lb[i]) + lb[i]
+    # ga = numpy.zeros((popSize, dim))
+    # for i in range(dim):
+    #     ga[:, i] = numpy.random.uniform(0, 1, popSize) * (ub[i] - lb[i]) + lb[i]
+    ga = population.copy()
     convergence_curve = numpy.zeros(iters)
 
     print('GA is optimizing  "' + objf.__name__ + '"')
